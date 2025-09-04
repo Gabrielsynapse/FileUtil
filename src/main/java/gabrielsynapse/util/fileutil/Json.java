@@ -1,4 +1,28 @@
 package gabrielsynapse.util.fileutil;
 
-public class Json {
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import gabrielsynapse.util.fileutil.exception.JsonNotFoundExeption;
+
+import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
+
+public class Json<T>{
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Type type;
+    public Json(Class<T> type){
+        this.type = type;
+    }
+    public void write(String path,T obj){
+        String jsonStr = gson.toJson(obj);
+        FileUtil.writeFile(path,jsonStr);
+    }
+
+    public T read(String path){
+        //verificando se o arquivo nao existe
+        if(FileUtil.isExistFile(path))throw new JsonNotFoundExeption("O arquivo " + path + " nao existe");
+        String jsonStr = FileUtil.readFile(path);
+        return gson.fromJson(jsonStr,type);
+    }
 }

@@ -34,7 +34,7 @@ public class Json<T>{
      */
     public T read(String path){
         //verificando se o arquivo nao existe
-        if(FileUtil.isExistFile(path))throw new JsonNotFoundExeption("O arquivo " + path + " nao existe");
+        if(!FileUtil.isExistFile(path))throw new JsonNotFoundExeption("O arquivo " + path + " nao existe");
         String jsonStr = FileUtil.readFile(path);
         return gson.fromJson(jsonStr,type);
     }

@@ -28,7 +28,7 @@ public class Main {
 
         //teste de leitura
         Json<PlayerData> json = new Json<>(PlayerData.class);
-
+        
         PlayerData playerData = json.read("herico.json");
         System.out.println(playerData.getName());
     }
